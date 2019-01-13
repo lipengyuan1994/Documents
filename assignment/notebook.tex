@@ -1,0 +1,936 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Assignment5}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{assignment-5}{%
+\section{Assignment 5}\label{assignment-5}}
+
+\hypertarget{patrick-pengyuan-li}{%
+\subsection{Patrick (Pengyuan) Li 🌰}\label{patrick-pengyuan-li}}
+
+\hypertarget{wed-21th-nov}{%
+\subsubsection{Wed 21th, Nov}\label{wed-21th-nov}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}141}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+          \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{cluster}\PY{n+nn}{.}\PY{n+nn}{hierarchy} \PY{k}{import} \PY{n}{dendrogram}\PY{p}{,} \PY{n}{linkage}  
+          \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{spatial}\PY{n+nn}{.}\PY{n+nn}{distance} \PY{k}{import} \PY{n}{euclidean}
+          \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{spatial}\PY{n+nn}{.}\PY{n+nn}{distance} \PY{k}{import} \PY{n}{pdist}\PY{p}{,}\PY{n}{squareform}
+          \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+          \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cluster} \PY{k}{import} \PY{n}{AgglomerativeClustering}
+          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cluster} \PY{k}{import} \PY{n}{KMeans}
+          \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{defaultdict}
+          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{silhouette\PYZus{}score}
+          \PY{k+kn}{from} \PY{n+nn}{itertools} \PY{k}{import} \PY{n}{combinations}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{c+c1}{\PYZsh{} read excel file into pandas dataframe}
+         \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cereals.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Data from DASL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index\PYZus{}col} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}40}]:}                           mfr type  calories  protein  fat  sodium  fiber  \textbackslash{}
+         name                                                                        
+         100\%\_Bran                   N    C        70        4    1     130   10.0   
+         100\%\_Natural\_Bran           Q    C       120        3    5      15    2.0   
+         All-Bran                    K    C        70        4    1     260    9.0   
+         All-Bran\_with\_Extra\_Fiber   K    C        50        4    0     140   14.0   
+         Almond\_Delight              R    C       110        2    2     200    1.0   
+         
+                                    carbo  sugars  potass  vitamins  shelf  weight  \textbackslash{}
+         name                                                                        
+         100\%\_Bran                    5.0     6.0   280.0        25      3     1.0   
+         100\%\_Natural\_Bran            8.0     8.0   135.0         0      3     1.0   
+         All-Bran                     7.0     5.0   320.0        25      3     1.0   
+         All-Bran\_with\_Extra\_Fiber    8.0     0.0   330.0        25      3     1.0   
+         Almond\_Delight              14.0     8.0     NaN        25      3     1.0   
+         
+                                    cups     rating  
+         name                                        
+         100\%\_Bran                  0.33  68.402973  
+         100\%\_Natural\_Bran          1.00  33.983679  
+         All-Bran                   0.33  59.425505  
+         All-Bran\_with\_Extra\_Fiber  0.50  93.704912  
+         Almond\_Delight             0.75  34.384843  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{n}{df}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+Index: 77 entries, 100\%\_Bran to Wheaties\_Honey\_Gold
+Data columns (total 15 columns):
+mfr         77 non-null object
+type        77 non-null object
+calories    77 non-null int64
+protein     77 non-null int64
+fat         77 non-null int64
+sodium      77 non-null int64
+fiber       77 non-null float64
+carbo       76 non-null float64
+sugars      76 non-null float64
+potass      75 non-null float64
+vitamins    77 non-null int64
+shelf       77 non-null int64
+weight      77 non-null float64
+cups        77 non-null float64
+rating      77 non-null float64
+dtypes: float64(7), int64(6), object(2)
+memory usage: 9.6+ KB
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} \PY{n}{originalrow}\PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+         \PY{n}{originalrow}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}49}]:} 77
+\end{Verbatim}
+            
+    \hypertarget{data-preprocessing}{%
+\subsection{Data preprocessing}\label{data-preprocessing}}
+
+    \hypertarget{keep-numerical-value-column}{%
+\paragraph{Keep numerical value
+column}\label{keep-numerical-value-column}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}58}]:} \PY{n}{df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mfr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{inplace}\PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}61}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}61}]:}                            calories  protein  fat  sodium  fiber  carbo  \textbackslash{}
+         name                                                                      
+         100\%\_Bran                        70        4    1     130   10.0    5.0   
+         100\%\_Natural\_Bran               120        3    5      15    2.0    8.0   
+         All-Bran                         70        4    1     260    9.0    7.0   
+         All-Bran\_with\_Extra\_Fiber        50        4    0     140   14.0    8.0   
+         Almond\_Delight                  110        2    2     200    1.0   14.0   
+         
+                                    sugars  potass  vitamins  shelf  weight  cups  \textbackslash{}
+         name                                                                       
+         100\%\_Bran                     6.0   280.0        25      3     1.0  0.33   
+         100\%\_Natural\_Bran             8.0   135.0         0      3     1.0  1.00   
+         All-Bran                      5.0   320.0        25      3     1.0  0.33   
+         All-Bran\_with\_Extra\_Fiber     0.0   330.0        25      3     1.0  0.50   
+         Almond\_Delight                8.0     NaN        25      3     1.0  0.75   
+         
+                                       rating  
+         name                                  
+         100\%\_Bran                  68.402973  
+         100\%\_Natural\_Bran          33.983679  
+         All-Bran                   59.425505  
+         All-Bran\_with\_Extra\_Fiber  93.704912  
+         Almond\_Delight             34.384843  
+\end{Verbatim}
+            
+    \hypertarget{remove-missing-value}{%
+\paragraph{Remove missing value}\label{remove-missing-value}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{df}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{any}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} missing values exists in column \PYZsq{}carbo\PYZsq{},\PYZsq{}sodium\PYZsq{},\PYZsq{}potass\PYZsq{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}42}]:} mfr         False
+         type        False
+         calories    False
+         protein     False
+         fat         False
+         sodium      False
+         fiber       False
+         carbo        True
+         sugars       True
+         potass       True
+         vitamins    False
+         shelf       False
+         weight      False
+         cups        False
+         rating      False
+         dtype: bool
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}62}]:} \PY{n}{df1} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{n}{newrow} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{df1}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+         \PY{n}{rowsremoved} \PY{o}{=} \PY{n}{originalrow} \PY{o}{\PYZhy{}} \PY{n}{newrow}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of rows removed = }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{rowsremoved}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of rows removed =  3
+
+    \end{Verbatim}
+
+    \hypertarget{normalize-the-data-z-transformation}{%
+\paragraph{Normalize the data
+(z-transformation)}\label{normalize-the-data-z-transformation}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}63}]:} \PY{n}{df1}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} check the data before normalization}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}63}]:}                            calories  protein  fat  sodium  fiber  carbo  \textbackslash{}
+         name                                                                      
+         100\%\_Bran                        70        4    1     130   10.0    5.0   
+         100\%\_Natural\_Bran               120        3    5      15    2.0    8.0   
+         All-Bran                         70        4    1     260    9.0    7.0   
+         All-Bran\_with\_Extra\_Fiber        50        4    0     140   14.0    8.0   
+         Apple\_Cinnamon\_Cheerios         110        2    2     180    1.5   10.5   
+         
+                                    sugars  potass  vitamins  shelf  weight  cups  \textbackslash{}
+         name                                                                       
+         100\%\_Bran                     6.0   280.0        25      3     1.0  0.33   
+         100\%\_Natural\_Bran             8.0   135.0         0      3     1.0  1.00   
+         All-Bran                      5.0   320.0        25      3     1.0  0.33   
+         All-Bran\_with\_Extra\_Fiber     0.0   330.0        25      3     1.0  0.50   
+         Apple\_Cinnamon\_Cheerios      10.0    70.0        25      1     1.0  0.75   
+         
+                                       rating  
+         name                                  
+         100\%\_Bran                  68.402973  
+         100\%\_Natural\_Bran          33.983679  
+         All-Bran                   59.425505  
+         All-Bran\_with\_Extra\_Fiber  93.704912  
+         Apple\_Cinnamon\_Cheerios    29.509541  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{preprocessing}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}71}]:} \PY{c+c1}{\PYZsh{} transformer = preprocessing.Normalizer()}
+         \PY{c+c1}{\PYZsh{} transformer.transform(df1)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:} \PY{n}{df2} \PY{o}{=} \PY{n}{preprocessing}\PY{o}{.}\PY{n}{normalize}\PY{p}{(}\PY{n}{df1}\PY{p}{,} \PY{n}{norm}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}72}]:} \PY{n}{df2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{df2}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}75}]:} \PY{n}{df2}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{df1}\PY{o}{.}\PY{n}{index}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}82}]:} \PY{n}{df2}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} the data after normalization}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}82}]:}                                  0         1         2         3         4   \textbackslash{}
+         name                                                                          
+         100\%\_Bran                  0.215316  0.012304  0.003076  0.399873  0.030759   
+         100\%\_Natural\_Bran          0.649058  0.016226  0.027044  0.081132  0.010818   
+         All-Bran                   0.165342  0.009448  0.002362  0.614126  0.021258   
+         All-Bran\_with\_Extra\_Fiber  0.133302  0.010664  0.000000  0.373245  0.037324   
+         Apple\_Cinnamon\_Cheerios    0.486522  0.008846  0.008846  0.796126  0.006634   
+         
+                                          5         6         7         8         9   \textbackslash{}
+         name                                                                          
+         100\%\_Bran                  0.015380  0.018456  0.861265  0.076899  0.009228   
+         100\%\_Natural\_Bran          0.043271  0.043271  0.730190  0.000000  0.016226   
+         All-Bran                   0.016534  0.011810  0.755848  0.059051  0.007086   
+         All-Bran\_with\_Extra\_Fiber  0.021328  0.000000  0.879791  0.066651  0.007998   
+         Apple\_Cinnamon\_Cheerios    0.046441  0.044229  0.309605  0.110573  0.004423   
+         
+                                          10        11        12  
+         name                                                     
+         100\%\_Bran                  0.003076  0.001015  0.210404  
+         100\%\_Natural\_Bran          0.005409  0.005409  0.183811  
+         All-Bran                   0.002362  0.000779  0.140364  
+         All-Bran\_with\_Extra\_Fiber  0.002666  0.001333  0.249820  
+         Apple\_Cinnamon\_Cheerios    0.004423  0.003317  0.130518  
+\end{Verbatim}
+            
+    \hypertarget{clustering}{%
+\subsection{Clustering}\label{clustering}}
+
+    \hypertarget{single-linkage}{%
+\paragraph{Single Linkage}\label{single-linkage}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}137}]:} \PY{n}{link} \PY{o}{=} \PY{n}{linkage}\PY{p}{(}\PY{n}{df2}\PY{p}{,} \PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{single}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metric}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{euclidean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
+          
+          
+          \PY{n}{dendro} \PY{o}{=} \PY{n}{dendrogram}\PY{p}{(}\PY{n}{link}\PY{p}{,} \PY{n}{color\PYZus{}threshold}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{leaf\PYZus{}font\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{9}\PY{p}{,}\PY{n}{get\PYZus{}leaves}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{truncate\PYZus{}mode}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} 
+          \PY{n}{orientation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{df2}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{count\PYZus{}sort}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{distance\PYZus{}sort}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{show\PYZus{}leaf\PYZus{}counts}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{no\PYZus{}plot}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} 
+          \PY{n}{no\PYZus{}labels}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}  \PY{n}{leaf\PYZus{}rotation}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{leaf\PYZus{}label\PYZus{}func}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} 
+           \PY{n}{show\PYZus{}contracted}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{link\PYZus{}color\PYZus{}func}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{single}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{complete-linkge}{%
+\paragraph{Complete linkge}\label{complete-linkge}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}171}]:} \PY{n}{link} \PY{o}{=} \PY{n}{linkage}\PY{p}{(}\PY{n}{df2}\PY{p}{,} \PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{complete}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metric}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{euclidean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}\PY{p}{)}
+          
+          
+          \PY{n}{dendro} \PY{o}{=} \PY{n}{dendrogram}\PY{p}{(}\PY{n}{link}\PY{p}{,} \PY{n}{color\PYZus{}threshold}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{leaf\PYZus{}font\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{9}\PY{p}{,}\PY{n}{get\PYZus{}leaves}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{truncate\PYZus{}mode}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} 
+          \PY{n}{orientation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labels}\PY{o}{=}\PY{n}{df2}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{count\PYZus{}sort}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{distance\PYZus{}sort}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{show\PYZus{}leaf\PYZus{}counts}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{no\PYZus{}plot}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} 
+          \PY{n}{no\PYZus{}labels}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}  \PY{n}{leaf\PYZus{}rotation}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{leaf\PYZus{}label\PYZus{}func}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} 
+           \PY{n}{show\PYZus{}contracted}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{link\PYZus{}color\PYZus{}func}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{com}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_27_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{which-method-produces-more-meaningful-clusters-why}{%
+\subparagraph{Which method produces more meaningful clusters?
+Why?}\label{which-method-produces-more-meaningful-clusters-why}}
+
+    In single-link clustering or single-linkage clustering , the similarity
+of two clusters is the similarity of their most similar members, more
+distant parts of the cluster and the clusters' overall structure are not
+taken into account.In complete-link clustering or complete-linkage
+clustering , the similarity of two clusters is the similarity of their
+most dissimilar members, and the entir structure is considered.
+
+https://nlp.stanford.edu/IR-book/html/htmledition/single-link-and-complete-link-clustering-1.html
+
+    According to the result of these two different method, complete linkage
+is recommended in this case, cause it can create more clusters and
+generate more meaningful results.
+
+    \hypertarget{how-many-clusters-do-you-recommend-how-many-cereals-are-there-in-each-cluster}{%
+\subparagraph{How many clusters do you recommend? How many cereals are
+there in each
+cluster?}\label{how-many-clusters-do-you-recommend-how-many-cereals-are-there-in-each-cluster}}
+
+    I would recommend 5 clusters and 38 cereals in cluster 1, 7 ceareals in
+cluster 2, 19 in cluster 3, 2 cereals in cluster 4 and 8 cereals in
+cluster 5.
+
+    \hypertarget{k-means}{%
+\subsubsection{K-means}\label{k-means}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}179}]:} \PY{n}{df2}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}179}]:} (74, 13)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}176}]:} \PY{n}{kmeans} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{algorithm}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{auto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{copy\PYZus{}x}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{init}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k\PYZhy{}means++}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{300000}\PY{p}{,}
+              \PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{precompute\PYZus{}distances}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{auto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{tol}\PY{o}{=}\PY{l+m+mf}{0.0001}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+          \PY{n}{kmeans}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df2}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}176}]:} KMeans(algorithm='auto', copy\_x=True, init='k-means++', max\_iter=300000,
+              n\_clusters=5, n\_init=10, n\_jobs=None, precompute\_distances='auto',
+              random\_state=None, tol=0.0001, verbose=0)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}180}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cluster centers:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{cluster\PYZus{}centers\PYZus{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+cluster centers:
+[[0.4447801  0.01155223 0.00455526 0.73451843 0.00984157 0.06349207
+  0.02585704 0.42179279 0.14657933 0.01014497 0.00438534 0.00301565
+  0.17954306]
+ [0.58805142 0.01701275 0.00336455 0.01850309 0.01348976 0.10388814
+  0.01812115 0.61827183 0.06594027 0.0162238  0.00604101 0.00647405
+  0.44141646]
+ [0.39968795 0.01156998 0.00633785 0.53081871 0.01742387 0.04252292
+  0.02952683 0.68675555 0.10253351 0.01023993 0.00391275 0.00219605
+  0.15693801]
+ [0.42048626 0.00741637 0.00318315 0.86021968 0.00161508 0.06185044
+  0.02739787 0.17784679 0.11649019 0.00659476 0.00378256 0.00362618
+  0.12738624]
+ [0.6788657  0.01003929 0.00337864 0.6251141  0.00357529 0.07204692
+  0.08414075 0.19228427 0.15686693 0.01141448 0.00627468 0.0056916
+  0.20198817]]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}213}]:} \PY{n}{labels} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{labels\PYZus{}}\PY{p}{)}
+          \PY{n}{labels}\PY{o}{.}\PY{n}{index}\PY{o}{=} \PY{n}{df2}\PY{o}{.}\PY{n}{index}
+          \PY{n}{labels}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{labels}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+Index: 74 entries, 100\%\_Bran to Wheaties\_Honey\_Gold
+Data columns (total 1 columns):
+0    74 non-null int32
+dtypes: int32(1)
+memory usage: 3.4+ KB
+                           0
+name                        
+100\%\_Bran                  2
+100\%\_Natural\_Bran          1
+All-Bran                   2
+All-Bran\_with\_Extra\_Fiber  2
+Apple\_Cinnamon\_Cheerios    0
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}217}]:} \PY{n}{top\PYZus{}centroids} \PY{o}{=} \PY{n}{kmeans}\PY{o}{.}\PY{n}{cluster\PYZus{}centers\PYZus{}}\PY{o}{.}\PY{n}{argsort}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{14}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{features for each cluster:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{k}{for} \PY{n}{num}\PY{p}{,} \PY{n}{centroid} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{top\PYZus{}centroids}\PY{p}{)}\PY{p}{:}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s2}{: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{num}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{df2}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{centroid}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+features for each cluster:
+0: All-Bran\_with\_Extra\_Fiber, 100\%\_Bran, Bran\_Chex, Clusters, Bran\_Flakes, Apple\_Jacks, Basic\_4, 100\%\_Natural\_Bran, Cap'n'Crunch, Apple\_Cinnamon\_Cheerios, All-Bran, Cheerios, Cinnamon\_Toast\_Crunch
+1: Bran\_Chex, 100\%\_Bran, Clusters, Apple\_Jacks, Bran\_Flakes, All-Bran\_with\_Extra\_Fiber, Basic\_4, 100\%\_Natural\_Bran, Cap'n'Crunch, Apple\_Cinnamon\_Cheerios, Cinnamon\_Toast\_Crunch, Cheerios, All-Bran
+2: Bran\_Chex, All-Bran\_with\_Extra\_Fiber, 100\%\_Bran, Clusters, Bran\_Flakes, Apple\_Jacks, Basic\_4, Apple\_Cinnamon\_Cheerios, 100\%\_Natural\_Bran, Cap'n'Crunch, All-Bran, Cheerios, Cinnamon\_Toast\_Crunch
+3: All-Bran\_with\_Extra\_Fiber, 100\%\_Bran, Bran\_Chex, Clusters, Bran\_Flakes, Apple\_Jacks, Basic\_4, 100\%\_Natural\_Bran, Cap'n'Crunch, Cheerios, Cinnamon\_Toast\_Crunch, All-Bran, Apple\_Cinnamon\_Cheerios
+4: 100\%\_Bran, All-Bran\_with\_Extra\_Fiber, Clusters, Bran\_Chex, Bran\_Flakes, Basic\_4, Apple\_Jacks, Cap'n'Crunch, 100\%\_Natural\_Bran, Cheerios, Cinnamon\_Toast\_Crunch, Apple\_Cinnamon\_Cheerios, All-Bran
+
+    \end{Verbatim}
+
+    \hypertarget{healthiness-table-for-cereals-in-cluster-0}{%
+\subparagraph{Healthiness table for cereals in cluster
+0}\label{healthiness-table-for-cereals-in-cluster-0}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}274}]:} \PY{c+c1}{\PYZsh{} generate the dataframe which contains the column calories, fat, sodium, sugar and protein }
+          \PY{c+c1}{\PYZsh{} for cereals in different clusters, it will be helpful to compare their healthiness}
+          
+          
+          \PY{n+nb}{list} \PY{o}{=} \PY{n}{labels}\PY{p}{[}\PY{n}{labels}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{]}
+          \PY{n}{df4} \PY{o}{=} \PY{n}{df1}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{calories}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{protein}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sodium}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sugars}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{df5} \PY{o}{=} \PY{n}{df4}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n+nb}{list}\PY{o}{.}\PY{n}{index}\PY{p}{]}
+          \PY{n}{df5}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}274}]:}          calories    protein        fat      sodium     sugars     rating
+          count   20.000000  20.000000  20.000000   20.000000  20.000000  20.000000
+          mean   109.000000   2.800000   1.100000  182.250000   6.350000  43.490230
+          std     15.183093   0.615587   0.718185   32.137656   2.814904   7.990124
+          min     90.000000   2.000000   0.000000  135.000000   2.000000  29.509541
+          25\%    100.000000   2.000000   1.000000  165.000000   4.500000  36.909842
+          50\%    100.000000   3.000000   1.000000  175.000000   6.000000  42.673174
+          75\%    112.500000   3.000000   2.000000  202.500000   8.250000  49.580767
+          max    140.000000   4.000000   2.000000  240.000000  12.000000  59.642837
+\end{Verbatim}
+            
+    \hypertarget{healthiness-table-for-cereals-in-cluster-1}{%
+\subparagraph{Healthiness table for cereals in cluster
+1}\label{healthiness-table-for-cereals-in-cluster-1}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}275}]:} \PY{n+nb}{list} \PY{o}{=} \PY{n}{labels}\PY{p}{[}\PY{n}{labels}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{df4} \PY{o}{=} \PY{n}{df1}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{calories}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{protein}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sodium}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sugars}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{df6} \PY{o}{=} \PY{n}{df4}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n+nb}{list}\PY{o}{.}\PY{n}{index}\PY{p}{]}
+          \PY{n}{df6}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}275}]:}          calories    protein        fat     sodium     sugars     rating
+          count   10.000000  10.000000  10.000000  10.000000  10.000000  10.000000
+          mean    86.000000   2.500000   0.600000   3.000000   2.900000  60.114925
+          std     21.705094   0.849837   1.577621   6.324555   3.314949  11.445232
+          min     50.000000   1.000000   0.000000   0.000000   0.000000  33.983679
+          25\%     82.500000   2.000000   0.000000   0.000000   0.000000  56.086142
+          50\%     90.000000   2.500000   0.000000   0.000000   1.500000  60.060052
+          75\%     97.500000   3.000000   0.000000   0.000000   5.750000  66.928325
+          max    120.000000   4.000000   5.000000  15.000000   8.000000  74.472949
+\end{Verbatim}
+            
+    \hypertarget{healthiness-table-for-cereals-in-cluster-2}{%
+\subparagraph{Healthiness table for cereals in cluster
+2}\label{healthiness-table-for-cereals-in-cluster-2}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}276}]:} \PY{n+nb}{list} \PY{o}{=} \PY{n}{labels}\PY{p}{[}\PY{n}{labels}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{]}
+          \PY{n}{df4} \PY{o}{=} \PY{n}{df1}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{calories}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{protein}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sodium}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sugars}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{df7} \PY{o}{=} \PY{n}{df4}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n+nb}{list}\PY{o}{.}\PY{n}{index}\PY{p}{]}
+          \PY{n}{df7}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}276}]:}          calories    protein        fat      sodium     sugars     rating
+          count   14.000000  14.000000  14.000000   14.000000  14.000000  14.000000
+          mean   112.142857   3.357143   1.642857  160.714286   8.571429  46.357907
+          std     33.091614   0.497245   1.081818   49.023430   4.237457  17.510978
+          min     50.000000   3.000000   0.000000   75.000000   0.000000  28.592785
+          25\%     92.500000   3.000000   1.000000  140.000000   5.250000  37.312796
+          50\%    120.000000   3.000000   1.500000  150.000000   9.000000  40.076086
+          75\%    135.000000   4.000000   2.750000  197.500000  11.750000  51.438289
+          max    160.000000   4.000000   3.000000  260.000000  14.000000  93.704912
+\end{Verbatim}
+            
+    \hypertarget{healthiness-table-for-cereals-in-cluster-3}{%
+\subparagraph{Healthiness table for cereals in cluster
+3}\label{healthiness-table-for-cereals-in-cluster-3}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}277}]:} \PY{n+nb}{list} \PY{o}{=} \PY{n}{labels}\PY{p}{[}\PY{n}{labels}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{]}
+          \PY{n}{df4} \PY{o}{=} \PY{n}{df1}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{calories}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{protein}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sodium}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sugars}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{df8} \PY{o}{=} \PY{n}{df4}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n+nb}{list}\PY{o}{.}\PY{n}{index}\PY{p}{]}
+          \PY{n}{df8}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}277}]:}          calories    protein        fat      sodium     sugars     rating
+          count   23.000000  23.000000  23.000000   23.000000  23.000000  23.000000
+          mean   110.869565   2.043478   0.826087  233.043478   6.826087  34.440072
+          std      5.146087   1.397344   0.834058   42.898907   4.292193  10.292353
+          min    100.000000   1.000000   0.000000  180.000000   1.000000  18.042851
+          25\%    110.000000   1.000000   0.000000  200.000000   3.000000  25.269279
+          50\%    110.000000   2.000000   1.000000  220.000000   8.000000  36.187559
+          75\%    110.000000   2.000000   1.000000  270.000000  11.000000  41.474280
+          max    120.000000   6.000000   3.000000  320.000000  13.000000  53.131324
+\end{Verbatim}
+            
+    \hypertarget{healthiness-table-for-cereals-in-cluster-4}{%
+\subparagraph{Healthiness table for cereals in cluster
+4}\label{healthiness-table-for-cereals-in-cluster-4}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}281}]:} \PY{n+nb}{list} \PY{o}{=} \PY{n}{labels}\PY{p}{[}\PY{n}{labels}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{4}\PY{p}{]}
+          \PY{n}{df4} \PY{o}{=} \PY{n}{df1}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{calories}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{protein}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sodium}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sugars}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rating}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{df9} \PY{o}{=} \PY{n}{df4}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n+nb}{list}\PY{o}{.}\PY{n}{index}\PY{p}{]}
+          \PY{n}{df9}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}281}]:}          calories   protein       fat      sodium     sugars     rating
+          count    7.000000  7.000000  7.000000    7.000000   7.000000   7.000000
+          mean   108.571429  1.571429  0.571429  104.285714  13.285714  31.918004
+          std      3.779645  0.534522  0.534522   36.449574   1.380131   3.180258
+          min    100.000000  1.000000  0.000000   45.000000  12.000000  27.753301
+          25\%    110.000000  1.000000  0.000000   80.000000  12.000000  29.627910
+          50\%    110.000000  2.000000  1.000000  125.000000  13.000000  32.207582
+          75\%    110.000000  2.000000  1.000000  130.000000  14.500000  34.213269
+          max    110.000000  2.000000  1.000000  140.000000  15.000000  35.782791
+\end{Verbatim}
+            
+    \hypertarget{according-to-the-description-tables-of-these-5-clusters-i-made-a-table-for-easily-compare-their-healthiness.}{%
+\subsubsection{According to the description tables of these 5 clusters,
+I made a table for easily compare their
+healthiness.}\label{according-to-the-description-tables-of-these-5-clusters-i-made-a-table-for-easily-compare-their-healthiness.}}
+
+    \begin{longtable}[]{@{}lrccccr@{}}
+\toprule
+Cluster & Calories & Protein & Fat & Sodium & Sugers &
+Rating\tabularnewline
+\midrule
+\endhead
+Cluster 0 & 109 & 2.8 & 1.1 & 182.25 & 6.35 & 43.49\tabularnewline
+Cluster 1 & 86 & 2.5 & 0.6 & 3 & 2.9 & 60.11\tabularnewline
+Cluster 2 & 112.14 & 3.35 & 1.65 & 160.71 & 8.57 & 46.36\tabularnewline
+Cluster 3 & 110.87 & 2.04 & 0.82 & 233.04 & 6.83 & 34.44\tabularnewline
+Cluster 4 & 108.57 & 1.57 & 0.57 & 104.29 & 13.29 & 31.92\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \hypertarget{according-to-the-descriptions-of-the-data-on-different-cereals-in-these-5-clusters.-we-can-see-that-cluster-1-is-most-healthy-amount-the-5-clusters-it-cobtains-high-protein-and-low-cal-low-sugers-and-low-fat-and-sodium.-therefore-i-would-like-to-recommend-the-primary-school-choose-the-cereals-in-cluster-1-and-the-rating-for-cluster-1-is-highest-so-the-student-will-like-the-cereals-in-the-cluster-1.}{%
+\subsubsection{According to the descriptions of the data on different
+cereals in these 5 clusters. We can see that cluster 1 is most healthy
+amount the 5 clusters, it cobtains high protein and low cal low sugers
+and low fat and sodium. Therefore I would like to recommend the primary
+school choose the cereals in cluster 1 and the rating for cluster 1 is
+highest, so the student will like the cereals in the cluster
+1.}\label{according-to-the-descriptions-of-the-data-on-different-cereals-in-these-5-clusters.-we-can-see-that-cluster-1-is-most-healthy-amount-the-5-clusters-it-cobtains-high-protein-and-low-cal-low-sugers-and-low-fat-and-sodium.-therefore-i-would-like-to-recommend-the-primary-school-choose-the-cereals-in-cluster-1-and-the-rating-for-cluster-1-is-highest-so-the-student-will-like-the-cereals-in-the-cluster-1.}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}282}]:} \PY{n}{df6}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}282}]:}                            calories  protein  fat  sodium  sugars     rating
+          name                                                                        
+          100\%\_Natural\_Bran               120        3    5      15     8.0  33.983679
+          Frosted\_Mini-Wheats             100        3    0       0     7.0  58.345141
+          Maypo                           100        4    1       0     3.0  54.850917
+          Puffed\_Rice                      50        1    0       0     0.0  60.756112
+          Puffed\_Wheat                     50        2    0       0     0.0  63.005645
+          Raisin\_Squares                   90        2    0       0     6.0  55.333142
+          Shredded\_Wheat                   80        2    0       0     0.0  68.235885
+          Shredded\_Wheat\_'n'Bran           90        3    0       0     0.0  74.472949
+          Shredded\_Wheat\_spoon\_size        90        3    0       0     0.0  72.801787
+          Strawberry\_Fruit\_Wheats          90        2    0      15     5.0  59.363993
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}289}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The name of the cereals in cluster 1:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{df6}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The name of the cereals in cluster 1:
+Index(['100\%\_Natural\_Bran', 'Frosted\_Mini-Wheats', 'Maypo', 'Puffed\_Rice',
+       'Puffed\_Wheat', 'Raisin\_Squares', 'Shredded\_Wheat',
+       'Shredded\_Wheat\_'n'Bran', 'Shredded\_Wheat\_spoon\_size',
+       'Strawberry\_Fruit\_Wheats'],
+      dtype='object', name='name')
+
+    \end{Verbatim}
+
+    \hypertarget{i-will-recommend-the-cereals-above-to-the-prime-school.}{%
+\subsubsection{I will recommend the cereals above to the prime
+school.}\label{i-will-recommend-the-cereals-above-to-the-prime-school.}}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
